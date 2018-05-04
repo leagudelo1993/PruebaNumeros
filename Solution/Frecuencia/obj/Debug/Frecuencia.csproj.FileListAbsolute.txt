@@ -1,0 +1,6 @@
+c:\users\leagudelo\documents\visual studio 2015\Projects\Solution\Frecuencia\bin\Debug\Frecuencia.exe.config
+C:\Users\leagudelo\documents\visual studio 2015\Projects\Solution\Frecuencia\bin\Debug\Frecuencia.exe
+C:\Users\leagudelo\documents\visual studio 2015\Projects\Solution\Frecuencia\bin\Debug\Frecuencia.pdb
+C:\Users\leagudelo\documents\visual studio 2015\Projects\Solution\Frecuencia\obj\Debug\Frecuencia.csprojResolveAssemblyReference.cache
+C:\Users\leagudelo\documents\visual studio 2015\Projects\Solution\Frecuencia\obj\Debug\Frecuencia.exe
+C:\Users\leagudelo\documents\visual studio 2015\Projects\Solution\Frecuencia\obj\Debug\Frecuencia.pdb
