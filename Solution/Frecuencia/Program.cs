@@ -6,61 +6,101 @@ using System.Threading.Tasks;
 
 namespace Frecuencia
 {
-    class Program
+    internal class Program
     {
-        static int diff;
-        static int[] missingNumbers(int[] arr, int[] brr)
+        private static void Main(String[] args)
         {
-            var array1 = arr.GroupBy(c => c)
-                         .Select(group => new
-                         {
-                             Value = group.Key,
-                             Count = group.Count()
-                         }).ToList();
+            int diff = 0;
+            int[] arr;
+            int[] brr;
+            int resultValue = 0;
+            int n = 0;
+            int m = 0;
 
-            var array2 = brr.GroupBy(c => c)
-                         .Select(group => new
-                         {
-                             Value = group.Key,
-                             Count = group.Count()
-                         }).ToList();
+            Console.WriteLine("Escribe el tamaño del primer arreglo");
+            int.TryParse(Console.ReadLine(), out resultValue);
 
-            var result = array1.Except(array2).ToList();
+            if (resultValue != 0)
+            {
+                n = resultValue;
+                resultValue = 0;
+            }
+            else
+                Close("El tamaño debe ser númerico");
 
-            result = result.Where(k => k.Count > 1).ToList();
-            diff = array2.Max(k => k.Value) - array2.Min(k => k.Value);
 
-            return result.Select(k => k.Value).OrderBy(k => k).ToArray();
+
+            Console.WriteLine("Escribe el tamaño del segundo arreglo");
+            int.TryParse(Console.ReadLine(), out resultValue);
+
+            if (resultValue != 0)
+            {
+                m = resultValue;
+                resultValue = 0;
+            }
+            else
+                Close("El tamaño debe ser númerico");
+
+            // Constraint: n<=m
+            if (m <= n)
+                Close("El tamaño del segundo arreglo debe ser mayor al del primer arreglo");
+
+
+            // Constraint: 1<=n,m<=2*100000
+            if ((n < 1 || n >= 200000) || (m < 1 || m >= 200000))
+                Close("El tamaño de los arreglos deben estar entre 1 y 200000");
+
+
+            Console.WriteLine("Escribe los valores del primer arreglo");
+            arr = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                // Constraint: x intercession B
+                int.TryParse(Console.ReadLine(), out resultValue);
+
+                if (resultValue != 0)
+                    arr[i] = resultValue;
+                else
+                    Close("Los valores deben ser numéricos");
+
+                resultValue = 0;
+            }
+
+            Console.WriteLine("Escribe los valores del segundo arreglo");
+            brr = new int[m];
+            for (int i = 0; i < m; i++)
+            {
+                // Constraint: x intercession B
+                int.TryParse(Console.ReadLine(), out resultValue);
+
+                if (resultValue != 0)
+                    brr[i] = resultValue;
+                else
+                    Close("Los valores deben ser numéricos");
+
+                resultValue = 0;
+            }
+
+            // Constraint: 1<=x <=10000
+            if ((arr.Where(k => k <= 1 || k >= 10000).Count() > 0) || (brr.Where(k => k <= 1 || k >= 10000).Count() > 0))
+                Close("Los valores de los arreglos deben estar entre 1 y 10000");
+
+
+            int[] result = NumericalOrdering.missingNumbers(arr, brr, out diff);
+
+            // Constraint: Xmax - Xmin < 101
+            if (diff > 100)
+                Close("La diferencia entre el valor máximo y minimo del segundo arreglo no debe ser menor o igual a 100");
+
+
+            Close(string.Concat("Los números faltantes son: ", String.Join(" ", result)));
         }
 
-        static void Main(String[] args)
+        public static void Close(string message)
         {
-            int n = Convert.ToInt32(Console.ReadLine());
-            string[] arr_temp = Console.ReadLine().Split(' ');
-            int[] arr = Array.ConvertAll(arr_temp, Int32.Parse);
-            int m = Convert.ToInt32(Console.ReadLine());
-            string[] brr_temp = Console.ReadLine().Split(' ');
-            int[] brr = Array.ConvertAll(brr_temp, Int32.Parse);
-
-            if ((arr.Where(k=> k <= 1 || k >= 10000).Count() > 0) || (brr.Where(k => k <= 1 || k >= 10000).Count() > 0))
-                Console.WriteLine("Los valores de los arreglos deben estar entre 1 y 10000");
-
-            else if (brr.Length <= arr.Length)
-                Console.WriteLine("El segundo arreglo debe ser mayor al primer arreglo");
-
-            else if (arr.Length < 1 && brr.Length < 1 && arr.Length >= 200000 && brr.Length >= 200000)
-                Console.WriteLine("El tamaño de los arreglos deben estar entre 1 y 200000");
-
-            else
-            {
-                int[] result = missingNumbers(arr, brr);
-
-                if (diff > 100)
-                    Console.WriteLine("La diferencia entre el valor máximo y minimo del segundo arreglo no debe ser menor o igual a 100");
-                else
-                    Console.WriteLine(String.Join(" ", result));
-            }
+            Console.WriteLine(message);
             Console.ReadLine();
+            Environment.Exit(0);
         }
     }
 }
